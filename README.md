@@ -151,4 +151,4 @@ void main() {
 }
 ```
 # Conclusion
-While CMakeEventSystem provides a simple and flexible way to manage events for prototyping purposes, it should not be used in production environments where type-safety is critical. The use of `std::type_info::hash_code()` for type identification can lead to collisions, which may result in unexpected behavior. For robust and type-safe event management, consider using other delegate types that enforce compile-time type checking.
+While this event system provides a simple and flexible way to manage events for prototyping purposes, it should not be used in production environments where type-safety is critical. The use of `std::type_info::hash_code()` for type identification can lead to collisions, which may result in unexpected behavior. For robust and type-safe event management, consider using other delegate types that enforce compile-time type checking.
