@@ -79,6 +79,9 @@ public:
 std::unique_ptr<EventSystem<EEventType>> Events::MyEvents;
 
 void main() {
+  // Initialize event system
+  Events::MyEvents = std::make_unique<EventSystem<EEventType>>();
+  // Initialize listener
   MyEventHandler handler;
   handler.subscribe();
 
