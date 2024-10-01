@@ -45,13 +45,14 @@ public:
 
   /// @brief Checks if the delegate is primed for execution.
   /// @return True if delegate is primed, otherwise False.
-  bool isPrimed() {
+  bool isPrimed() const {
     return _primed;
   }
 
   /// @brief Primes the delegate storing arguments for later execution.
   /// @param ...vargs Arguments passed to the method pointer.
   void prime(const VArgs&... vargs) {
+    std::unique_lock<decltype(_execMutex)> lock(_execMutex);
     _primed = true;
     _params = std::make_tuple(vargs...);
   }
@@ -62,6 +63,7 @@ public:
   TReturn exec() {
     if (!_primed)
       throw bad_delegate_call("Execution attempted on a TDelegate that was not primed.");
+    std::unique_lock<decltype(_execMutex)> lock(_execMutex);
     _primed = false;
     return std::apply(std::bind_front(_func, _objPtr), _params);
   }
@@ -98,4 +100,5 @@ private:
   TReturn(TObj::* _func)(const VArgs&...);
   std::atomic_bool _primed;
   std::tuple<VArgs...> _params;
+  std::mutex _execMutex;
 };
