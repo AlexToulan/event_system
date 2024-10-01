@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Exceptions.hpp"
+
 #include <typeinfo>
 
 /// @brief Generic member function Delegate for storage and explicit variadic execution.
@@ -42,7 +44,7 @@ public:
     TReturn(TObj::* func)(const VArgs&...) = reinterpret_cast<TReturn(TObj::*)(const VArgs&...)>(_func);
     // Ensure the types of vargs match those expected by the underlying VDelegate
     if (_typeHashCode != typeid(func).hash_code()) {
-      throw std::bad_function_call();
+      throw bad_delegate_call("GDelegate: Run-time type-safety check failed. Ensure execution function signature matches underlying member function signature.");
     }
     return (objPtr->*func)(vargs...);
   }

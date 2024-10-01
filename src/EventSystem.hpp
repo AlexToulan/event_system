@@ -43,7 +43,7 @@ public:
         } else {
           try {
             del->template exec<void, EventListener, VArgs...>(vargs...);
-          } catch (const std::bad_function_call& e) {
+          } catch (const bad_delegate_call& e) {
             Log().error("Exception caught in \"{}\": {}", _name, e.what());
             succ = false;
           }
