@@ -43,10 +43,14 @@ public:
     return *this;
   }
 
+  /// @brief Checks if the delegate is primed for execution.
+  /// @return True if delegate is primed, otherwise False.
   bool isPrimed() {
     return _primed;
   }
 
+  /// @brief Primes the delegate storing arguments for later execution.
+  /// @param ...vargs Arguments passed to the method pointer.
   void prime(const VArgs&... vargs) {
     _primed = true;
     _params = std::make_tuple(vargs...);
@@ -63,7 +67,6 @@ public:
   }
 
   /// @brief Executes the Delegate.
-  /// @param ...vargs Arguments passed to the method pointer.
   /// @return Return value of the method pointer.
   TReturn operator()() {
     return exec();
